@@ -1,6 +1,14 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/TU_USUARIO/ZEUS/main/assets/zeus_banner.png" alt="ZEUS Logo" width="400"/>
-</p>
+<div align="center">
+<pre>
+  ______  ______  _    _  _____ 
+ |___  / |  ____|| |  | |/ ____|
+    / /  | |__   | |  | | (___  
+   / /   |  __|  | |  | |\___ \ 
+  / /__  | |____ | |__| |____) |
+ /_____| |______| \____/|_____/ 
+                                
+</pre>
+</div>
 
 <h1 align="center">⚡ ZEUS: Asynchronous Reconnaissance Engine</h1>
 <p align="center"><i>"Velocidad de rayo, precisión de dios."</i></p>
@@ -13,17 +21,17 @@ A diferencia de los escáneres tradicionales que operan secuencialmente o median
 
 ---
 
-## 🏛️ Arquitectura & Filosofía
+## Arquitectura & Filosofía
 
 ZEUS representa un cambio de paradigma respecto a las herramientas de scripting convencionales. Su diseño se basa en tres pilares fundamentales:
 
-### 1. Motor Asíncrono (Non-Blocking I/O) ⚡
+### 1. Motor Asíncrono (Non-Blocking I/O)
 
 - **Tecnología:** `asyncio` nativo de Python 3.
 - **Rendimiento:** Miles de conexiones simultáneas con mínimo uso de CPU.
 - **Analogía:** No es un cajero atendiendo una fila uno por uno; es un pulpo gestionando mil teléfonos a la vez.
 
-### 2. Diseño Orientado a Objetos (OOP) 🧩
+### 2. Diseño Orientado a Objetos (POO)
 
 - **Target:** Encapsula el estado, datos y resultados de la víctima (IP, dominio, puertos abiertos).
 - **Scanner:** Encapsula la lógica de negocio, resolución DNS y rutinas de conexión.
@@ -34,7 +42,7 @@ ZEUS representa un cambio de paradigma respecto a las herramientas de scripting 
 
 ---
 
-## 🚀 Características (v0.1)
+## Características (v0.1)
 
 - **Resolución DNS Asíncrona:** Convierte dominios a IPs sin bloquear el proceso principal.
 - **Escaneo de Puertos Masivo:** Escanea rangos completos (1-1000+) en segundos gracias a `asyncio.gather`.
@@ -44,7 +52,7 @@ ZEUS representa un cambio de paradigma respecto a las herramientas de scripting 
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 - **Python 3.8+**: Sintaxis moderna (`async/await`).
 - **asyncio**: Concurrencia nativa.
@@ -53,7 +61,7 @@ ZEUS representa un cambio de paradigma respecto a las herramientas de scripting 
 
 ---
 
-## ⚙️ Instalación y Configuración
+## Instalación y Configuración
 
 Se recomienda el uso de un entorno virtual (`venv`) para mantener limpio tu sistema.
 
