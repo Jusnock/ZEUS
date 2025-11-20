@@ -84,7 +84,7 @@ pip install rich
 
 ---
 
-## ⚡ Modo de Uso
+## Modo de Uso
 
 Actualmente (v0.1 Alpha), el objetivo se configura directamente en el main para propósitos de depuración y aprendizaje.
 
