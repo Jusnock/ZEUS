@@ -36,7 +36,7 @@ ZEUS representa un cambio de paradigma respecto a las herramientas de scripting 
 - **Target:** Encapsula el estado, datos y resultados de la víctima (IP, dominio, puertos abiertos).
 - **Scanner:** Encapsula la lógica de negocio, resolución DNS y rutinas de conexión.
 
-### 3. Experiencia de Usuario (UX) Profesional 🎨
+### 3. Experiencia de Usuario (UX)
 
 - Impulsado por la librería `rich` para una interfaz de terminal moderna con barras de progreso y tablas dinámicas.
 
@@ -114,7 +114,7 @@ Resultados para scanme.nmap.org
 
 ---
 
-## 🧠 Guía de Estudio (Arquitectura Interna)
+## Guía de Estudio (Arquitectura Interna)
 
 ### 1. El Event Loop (Bucle de Eventos)
 
