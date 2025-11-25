@@ -1,17 +1,29 @@
 <div align="center">
-<pre>
+```text
 ███████╗███████╗██╗   ██╗███████╗
 ╚══███╔╝██╔════╝██║   ██║██╔════╝
   ███╔╝ █████╗  ██║   ██║███████╗
  ███╔╝  ██╔══╝  ██║   ██║╚════██║
 ███████╗███████╗╚██████╔╝███████║
 ╚══════╝╚══════╝ ╚═════╝ ╚══════╝
-                                
-</pre>
+```
 </div>
 
 <h1 align="center">⚡ ZEUS: Asynchronous Reconnaissance Engine</h1>
 <p align="center"><i>"Velocidad de rayo, precisión de dios."</i></p>
+
+---
+
+## Contenido
+
+- [Arquitectura & Filosofía](#arquitectura--filosofía)
+- [Características](#características-v02---beta)
+- [Tecnologías Utilizadas](#tecnologías-utilizadas)
+- [Instalación y Configuración](#instalación-y-configuración)
+- [Modo de Uso](#modo-de-uso)
+- [Guía de Estudio (Arquitectura Interna)](#guía-de-estudio-arquitectura-interna)
+- [Uso de CLI y ejemplo de encabezado ASCII](#uso-de-cli-y-ejemplo-de-encabezado-ascii)
+- [Advertencia Legal](#advertencia-legal-disclaimer)
 
 ---
 
@@ -33,31 +45,38 @@ ZEUS representa un cambio de paradigma respecto a las herramientas de scripting 
 
 ### 2. Diseño Orientado a Objetos (POO)
 
-- **Target:** Encapsula el estado, datos y resultados de la víctima (IP, dominio, puertos abiertos).
+- **Target:** Encapsula el estado, datos y resultados de la víctima (IP, dominio, puertos, banners).
 - **Scanner:** Encapsula la lógica de negocio, resolución DNS y rutinas de conexión.
 
 ### 3. Experiencia de Usuario (UX)
 
-- Impulsado por la librería `rich` para una interfaz de terminal moderna con barras de progreso y tablas dinámicas.
+- Impulsado por la librería `rich` para una interfaz de terminal moderna con barras de progreso, tablas dinámicas y colores semánticos.
 
 ---
 
-## Características (v0.1)
+## Características (v0.2 - Beta)
 
-- **Resolución DNS Asíncrona:** Convierte dominios a IPs sin bloquear el proceso principal.
-- **Escaneo de Puertos Masivo:** Escanea rangos completos (1-1000+) en segundos gracias a `asyncio.gather`.
-- **Barra de Progreso Atómica:** Visualización precisa del avance usando Context Managers.
-- **Reporte Tabular:** Salida limpia y estructurada lista para análisis.
-- **Timeouts Agresivos:** Optimizado para redes rápidas y descarte inmediato de hosts muertos.
+Esta versión introduce inteligencia de servicios y control total:
+
+- **Banner Grabbing Asíncrono:** (NUEVO) ZEUS no solo toca la puerta, ahora "escucha" la respuesta del servicio (SSH, FTP, SMTP, etc.) sin bloquear el escaneo.
+- **Interfaz de Comandos (CLI):** (NUEVO) Control total mediante argumentos (`-t`, `-p`, `--timeout`).
+- **Parsing de Puertos Inteligente:** (NUEVO) Soporta rangos (`1-1000`) y listas específicas (`22,80,443`).
+- **Resolución DNS Asíncrona:** Convierte dominios a IPs utilizando el `Event Loop`.
+- **Escaneo Masivo:** Capaz de escanear los 65535 puertos en tiempos récord.
 
 ---
 
 ## Tecnologías Utilizadas
 
 - **Python 3.8+**: Sintaxis moderna (`async/await`).
-- **asyncio**: Concurrencia nativa.
+- **asyncio**: Concurrencia nativa y manejo de `StreamReaders`.
 - **rich**: Texto enriquecido y formateo en terminal.
-- **socket**: Modo no bloqueante para conexiones de bajo nivel.
+- **argparse**: Gestión profesional de argumentos de línea de comandos.
+
+## Requisitos
+
+- Python 3.8+ recomedado
+- `rich` para UI de terminal: incluido en `requirements.txt`
 
 ---
 
@@ -78,68 +97,74 @@ source venv/bin/activate  # Linux / Mac
 # python -m venv venv
 # venv\Scripts\activate
 
-# Instala las dependencias
-pip install rich
-```
+# Instala las dependencias (recomendado: usar requirements.txt)
+pip install -r requirements.txt
 
----
+```
 
 ## Modo de Uso
 
-Actualmente (v0.1 Alpha), el objetivo se configura directamente en el main para propósitos de depuración y aprendizaje.
+ZEUS v0.2 es totalmente configurable desde la terminal.
+
+### Sintaxis Básica
 
 ```bash
-python3 zeus.py
+python3 zeus.py -t <OBJETIVO> [OPCIONES]
 ```
 
-### Salida Esperada
+## Salida esperada
 
-```plaintext
-─────────────────────────── PROYECTO ZEUS v0.1 ───────────────────────────
+```text
 [*] Resolviendo IP para scanme.nmap.org...
 [+] IP Encontrada: 45.33.32.156
 
 Iniciando Escaneo Masivo en 45.33.32.156
-Escaneando puertos... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:01
+Escaneando y Analizando... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:02
 
 Resultados para scanme.nmap.org
-┏━━━━━━━━╤━━━━━━━━━━━━━━┓
-┃ Puerto │ Estado       ┃
-┡━━━━━━━━╇━━━━━━━━━━━━━━┩
-│     22 │ ABIERTO 🔓   │
-│     80 │ ABIERTO 🔓   │
-│   9929 │ ABIERTO 🔓   │
-└────────┴──────────────┘
+┏━━━━━━━━╤━━━━━━━━━━━━━━╤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Puerto │ Estado       ┃ Servicio / Banner            ┃
+┡━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│     22 │ ABIERTO 🔓   │ SSH-2.0-OpenSSH_7.4          │
+│     80 │ ABIERTO 🔓   │ Servicio Web (HTTP/HTTPS)    │
+│   9929 │ ABIERTO 🔓   │ nping-echo                   │
+└────────┴──────────────┴──────────────────────────────┘
 ```
-
----
 
 ## Guía de Estudio (Arquitectura Interna)
 
 ### 1. El Event Loop (Bucle de Eventos)
 
-A diferencia de los scripts lineales, ZEUS inicia un "Director de Orquesta" (Event Loop). Cuando una función necesita esperar (ej. una conexión de red), cede el control al bucle, el cual ejecuta la siguiente tarea pendiente.
+ZEUS inicia un "Director de Orquesta" (Event Loop). Cuando una función necesita esperar, cede el control al bucle, eliminando tiempos muertos y permitiendo que otras tareas (I/O) sigan ejecutándose en el mismo hilo.
 
-### 2. `async def` y `await`
+### 2. Oídos Asíncronos (StreamReader)
 
-- `async def`: Define una corrutina, que puede ser pausada.
-- `await`: Punto de suspensión; pausa la función y permite que el bucle ejecute otras tareas.
+En la v0.2, utilizamos `reader.read(1024)`. A diferencia de `socket.recv()`, que bloquea todo el programa hasta que lleguen datos, `reader` permite a ZEUS "dejar la oreja puesta" en un puerto esperando datos mientras simultáneamente toca el timbre en otros 100 puertos. Esto mejora la latencia y el rendimiento en escaneos masivos.
 
 ### 3. Paralelismo con `asyncio.gather`
 
-Esta es la clave de la velocidad:
+`asyncio.gather` es clave para la velocidad y escala del motor: toma una lista de corrutinas y las lanza simultáneamente en el bucle.
 
 ```python
+# Python
 await asyncio.gather(*tareas)
 ```
 
-Permite escanear 1000 puertos en el tiempo que toma escanear uno solo.
+Toma miles de micro-tareas y las ejecuta concurrentemente, reduciendo drásticamente el tiempo total del escaneo respecto a un enfoque secuencial.
 
-### 4. Patrón de Diseño con `rich`
+### 4. Integración CLI + POO
 
-Utilizamos Context Managers (`with Progress() as...`) para manejar la interfaz gráfica, asegurando limpieza y profesionalidad incluso tras un `CTRL+C`.
+Los argumentos del CLI (por ejemplo `args.timeout`) se inyectan en los objetos del motor para que la configuración del usuario modifique el comportamiento en tiempo de ejecución. Esto hace que la lógica del escáner sea configurable y reutilizable:
 
----
+```python
+# Ejemplo
+parser.add_argument("--timeout", type=int, default=3)
+
+# Más tarde, en el código:
+scanner = Scanner(timeout=args.timeout)
+```
+
+Esto permite que parámetros del CLI afecten directamente a la instancia del `Scanner`, manteniendo separación de responsabilidades y fácil testeo.
 
 ## ⚠️ Advertencia Legal (Disclaimer)
 
@@ -152,3 +177,7 @@ ZEUS es una herramienta ofensiva de alta velocidad.
 **Úsalo con sabiduría. Úsalo éticamente.**
 
 ---
+
+## Contribuciones
+
+Contribuciones son bienvenidas. Abre un issue si encuentras un bug o quieres añadir una mejora. Si quieres contribuir con código, crea un fork y abre un Pull Request explicando los cambios.
